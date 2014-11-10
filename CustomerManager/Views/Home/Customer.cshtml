@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Customer";
+}
+
+<table class="table table-striped" id="customer">
+    <thead>
+        <tr>
+            <th></th>
+            <th>CustomerID</th>
+            <th>CompanyName</th>
+            <th>ContactName</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: customers">
+        <tr>
+            <td>
+                <a class="btn btn-info" href="#" data-bind="click: $root.EditCustomer.bind($root), visible: !$root.isItemEditing($data)">Edit</a>
+                <a class="btn btn-default" href="#" data-bind="click: $root.ApplyCustomer.bind($root), visible: $root.isItemEditing($data)">Apply</a>
+                <a class="btn btn-danger" href="#" data-bind="click: $root.CancelEdit.bind($root), visible: $root.isItemEditing($data)">Cancel</a>
+            </td>
+            
+            <td><span data-bind="text: customerId"></span></td>
+            
+            <!-- ko if: $root.isItemEditing($data) -->
+            <td>
+                <input class="form-control" type="text" data-bind="value: $root.editingItem().companyName" />
+            </td>
+            <!-- /ko -->
+
+            <td data-bind="visible: !$root.isItemEditing($data)">
+                <span data-bind="text: companyName"></span>
+            </td>
+            
+            <!-- ko if: $root.isItemEditing($data) -->
+            <td>
+                <input class="form-control" type="text" data-bind="value: $root.editingItem().contactName" />
+            </td>
+            <!-- /ko -->
+
+            <td data-bind="visible: !$root.isItemEditing($data)">
+                <span data-bind="text: contactName"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div >
+    <div>
+        <span data-bind='text: pagesText'></span>
+    </div>
+    <ul class="pager">
+        <li><a href="#" data-bind='visible: page() > 1, click: PageBack'>Previous</a></li>
+        <li><a href="#" data-bind='visible: page() < totalPages(), click: PageNext'>Next</a></li>
+    </ul>
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/customer")
+}
+
+
